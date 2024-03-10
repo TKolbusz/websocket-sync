@@ -8,7 +8,7 @@ if (!tenantId) {
     process.exit(1);
 }
 
-let lastSyncAt = Math.floor(Date.now() / 1000);
+let lastSyncAt = 0
 
 function connect() {
     console.log("Connecting with lastSyncAt=" + lastSyncAt);

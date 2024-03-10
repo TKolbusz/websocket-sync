@@ -7,7 +7,7 @@ Enables clients to subscribe to notifications for a specific tenant.
 Broadcasts change notifications to subscribed clients.
 Client is responsible for storing point in time where last message was successfully read.
 
-After connecting, server should replay all the events since the last time client had disconnected - TODO.
+After connecting, server replays all the events since the last time client had disconnected.
 
 Reservation REST API:
 Allows the creation of new reservation entities.
@@ -17,7 +17,7 @@ Triggers notifications through the WebSocket channel upon reservation changes.
 
 1. Micronaut
 2. WebSocket
-3. Database - TODO
+3. PostgreSQL PubSub
 
 ### Example usage
 

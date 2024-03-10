@@ -25,9 +25,7 @@ public class NotificationWebSocketServer {
         String sinceStr = session.getRequestParameters().get("since");
         long sinceTimestamp = sinceStr != null ? Long.parseLong(sinceStr) : 0;
         log("onOpen " + sinceTimestamp, session, tenantId);
-        changeNotificationService.addSession(tenantId, session);
-
-        // TODO broadcast all events for a given `since` timestamp
+        changeNotificationService.addSession(tenantId, session, sinceTimestamp);
     }
 
     @OnMessage
