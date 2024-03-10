@@ -7,6 +7,7 @@ import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.client.HttpClient;
 import io.micronaut.http.client.annotation.Client;
+import io.micronaut.http.client.exceptions.HttpClientResponseException;
 import io.micronaut.test.annotation.MockBean;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import jakarta.inject.Inject;
@@ -15,8 +16,7 @@ import org.mockito.Mockito;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 
 @MicronautTest
@@ -50,5 +50,15 @@ public class ReservationControllerTest {
         assertEquals(HttpStatus.CREATED, response.status());
         assertNotNull(response.body());
         assertEquals("test-id", response.body().id());
+    }
+
+    @Test
+    void testCreateReservation_missingData() {
+        // given
+        CreateReservationDTO reservationDTO = new CreateReservationDTO(null, null, null);
+
+        // when
+        HttpRequest<CreateReservationDTO> request = HttpRequest.POST("/tenant1/reservations", reservationDTO);
+        assertThrows(HttpClientResponseException.class, () -> client.toBlocking().exchange(request, ReservationDTO.class));
     }
 }

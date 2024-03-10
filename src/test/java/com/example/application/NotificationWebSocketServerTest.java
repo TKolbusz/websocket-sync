@@ -84,7 +84,7 @@ class NotificationWebSocketServerTest {
         });
 
         await().until(() -> {
-            List<String> messagesChronologically = tenant1Client.getMessagesChronologically();
+            List<String> messagesChronologically = tenant2Client.getMessagesChronologically();
             return messagesChronologically.size() == 1 &&
                     messagesChronologically.get(0).contains("RESERVATION") && messagesChronologically.get(0).contains("2");
         });

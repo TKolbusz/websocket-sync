@@ -1,26 +1,35 @@
-## Micronaut 4.3.5 Documentation
+## WebSocket Sync Application
 
-- [User Guide](https://docs.micronaut.io/4.3.5/guide/index.html)
-- [API Reference](https://docs.micronaut.io/4.3.5/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/4.3.5/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
+The goal of this service is to showcase data synchronization design using WebSockets.
 
----
+WebSocket Notifications:
+Enables clients to subscribe to notifications for a specific tenant.
+Broadcasts change notifications to subscribed clients.
+Client is responsible for storing point in time where last message was successfully read.
 
-- [Shadow Gradle Plugin](https://plugins.gradle.org/plugin/com.github.johnrengelman.shadow)
-- [Micronaut Gradle Plugin documentation](https://micronaut-projects.github.io/micronaut-gradle-plugin/latest/)
-- [GraalVM Gradle Plugin documentation](https://graalvm.github.io/native-build-tools/latest/gradle-plugin.html)
+After connecting, server should replay all the events since the last time client had disconnected - TODO.
 
-## Feature websocket documentation
+Reservation REST API:
+Allows the creation of new reservation entities.
+Triggers notifications through the WebSocket channel upon reservation changes.
 
-- [Micronaut Websocket documentation](https://docs.micronaut.io/latest/guide/#websocket)
+### Technologies
 
-## Feature serialization-jackson documentation
+1. Micronaut
+2. WebSocket
+3. Database - TODO
 
-- [Micronaut Serialization Jackson Core documentation](https://micronaut-projects.github.io/micronaut-serialization/latest/guide/)
+### Example usage
 
-## Feature micronaut-aot documentation
-
-- [Micronaut AOT documentation](https://micronaut-projects.github.io/micronaut-aot/latest/guide/)
-
-
+Start the server
+```bash
+./gradlew run
+```
+Start the client
+```bash
+node client/client.js 1
+```
+Create Reservation
+```bash
+curl -X POST -H "Content-Type: application/json" -d '{"startAt": "2024-03-12T15:00:00", "endAt": "2024-03-12T16:30:00", "customer": "Alice"}' http://localhost:8080/1/reservations 
+```
